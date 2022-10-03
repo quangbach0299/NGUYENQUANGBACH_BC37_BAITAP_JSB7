@@ -215,7 +215,7 @@ function updateStaff() {
 //Validate Form
 
 function required(val, spanID) {
-  if (val.length === 0) {
+  if (val.length === 0 || val === 0) {
     document.getElementById(spanID).style.display = "inline-block";
     document.getElementById(spanID).innerHTML = "*Trường này bắt buộc nhập";
     return false;
@@ -279,7 +279,7 @@ function validateForm() {
   var basicSalary = +document.getElementById("luongCB").value;
   var position = document.getElementById("chucvu").value;
   var totalHour = +document.getElementById("gioLam").value;
-  var pUserName = /^[A-z]\w+$/g;
+  var pUserName = /^[0-9]{4,6}$/g;
   var isValid = true;
 
   var pFullName =
@@ -288,15 +288,13 @@ function validateForm() {
   var pPassWord =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[ -/:-@\[-`{-~]).{6,64}$/;
   var pHour = /^(8[0-9]|9[0-9]|1[0-9]{2}|200)$/g;
+  var pSalaray = /^([1-9][0-9]{6}|1[0-9]{7}|20000000)$/;
+  var pDate =
+    /^(?:(?:(?:0[1-9]|1[0-2]|[1-9])\/(?:0[1-9]|1\d|2[0-8])|(?:0[13-9]|1[0-2])\/(?:29|30)|(?:0[13578]|1[02])\/31)\/[1-9]\d{3}|02\/29(?:\/[1-9]\d(?:0[48]|[2468][048]|[13579][26])|(?:[2468][048]|[13579][26])00))$/g;
 
   isValid &=
     required(username, "tbTKNV") &&
-    string(
-      pUserName,
-      username,
-      "tbTKNV",
-      "Vui lòng nhập username chữ cái viết liền không dấu"
-    ) &&
+    string(pUserName, username, "tbTKNV", "Vui lòng nhập username từ 4-6 số") &&
     length(username, "tbTKNV", 4, 9);
   isValid &=
     required(fullname, "tbTen") &&
@@ -315,21 +313,29 @@ function validateForm() {
       "Vui lòng nhập mật khẩu chứa ít nhất 1 ký tự số, 1 ký tự in hoa, 1 ký tự đặc biệt  "
     );
 
-  isValid &= required(dayOfWork, "tbNgay");
+  isValid &=
+    required(dayOfWork, "tbNgay") &&
+    string(
+      pDate,
+      dayOfWork,
+      "tbNgay",
+      "Vui lòng nhập theo định dạng mm/dd/yyyy"
+    );
 
-  isValid &= number(
-    basicSalary,
-    "tbLuongCB",
-    1000000,
-    20000000,
-    "Lương cơ bản phải từ 1 000 000 đến 20 000 000"
-  );
+  isValid &=
+    required(basicSalary, "tbLuongCB") &&
+    string(
+      pSalaray,
+      basicSalary,
+      "tbLuongCB",
+      "Lương cơ bản phải từ 1 000 000 đến 20 000 000"
+    );
 
   isValid &= required(position, "tbChucVu");
 
   isValid &=
     required(totalHour, "tbGiolam") &&
     string(pHour, totalHour, "tbGiolam", "Số giờ làm phải từ 80-200 giờ");
-  document.getElementsByClassName("sp-thongbao").innerHTML;
+
   return isValid;
 }
