@@ -63,12 +63,15 @@ function renderStaff(data) {
     <td>${currentStaff.position}</td>
     <td>${currentStaff.totalIncome()}</td>
     <td>${currentStaff.classification()}</td>
-    <td><button onclick="deleteStaff('${
+    <td>
+    <button class="btn btn-danger mb-2" onclick="deleteStaff('${
       currentStaff.username
-    }')" class = "btn btn-danger">Xóa</button></td>
-    <td><button onclick="getUpdateStaff('${
+    }')">Xóa</button>
+    <button class="btn btn-info"  data-toggle="modal"
+    data-target="#myModal" onclick="getUpdateStaff('${
       currentStaff.username
-    }')" class = "btn btn-danger" data-toggle="modal" data-target="#myModal">Sửa</button></td>
+    }')">Sửa</button>
+    </td>
   </tr>`;
   }
   document.getElementById("tableDanhSach").innerHTML = tableHTML;
@@ -329,6 +332,6 @@ function validateForm() {
     200,
     "Số giờ làm phải từ 80-200 giờ"
   );
-
+  document.getElementsByClassName("sp-thongbao").innerHTML;
   return isValid;
 }
