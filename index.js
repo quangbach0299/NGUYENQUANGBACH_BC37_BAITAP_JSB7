@@ -287,6 +287,8 @@ function validateForm() {
   var pEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
   var pPassWord =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[ -/:-@\[-`{-~]).{6,64}$/;
+  var pHour = /^(8[0-9]|9[0-9]|1[0-9]{2}|200)$/g;
+
   isValid &=
     required(username, "tbTKNV") &&
     string(
@@ -325,13 +327,9 @@ function validateForm() {
 
   isValid &= required(position, "tbChucVu");
 
-  isValid &= number(
-    totalHour,
-    "tbGiolam",
-    80,
-    200,
-    "Số giờ làm phải từ 80-200 giờ"
-  );
+  isValid &=
+    required(totalHour, "tbGiolam") &&
+    string(pHour, totalHour, "tbGiolam", "Số giờ làm phải từ 80-200 giờ");
   document.getElementsByClassName("sp-thongbao").innerHTML;
   return isValid;
 }
