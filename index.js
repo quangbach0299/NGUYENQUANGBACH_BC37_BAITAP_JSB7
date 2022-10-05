@@ -279,7 +279,7 @@ function validateForm() {
   var basicSalary = +document.getElementById("luongCB").value;
   var position = document.getElementById("chucvu").value;
   var totalHour = +document.getElementById("gioLam").value;
-  var pUserName = /^[0-9]{4,6}$/g;
+  var pUserName = /^[A-z0-9]{4,6}$/g;
   var isValid = true;
 
   var pFullName =
@@ -294,7 +294,12 @@ function validateForm() {
 
   isValid &=
     required(username, "tbTKNV") &&
-    string(pUserName, username, "tbTKNV", "Vui lòng nhập username từ 4-6 số") &&
+    string(
+      pUserName,
+      username,
+      "tbTKNV",
+      "Vui lòng nhập username từ 4-6 chữ số"
+    ) &&
     length(username, "tbTKNV", 4, 9);
   isValid &=
     required(fullname, "tbTen") &&
